@@ -1,0 +1,384 @@
+/* Page layout */
+* {
+  padding: 0;
+  margin: 0;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/* Inputs border */
+*:focus {
+  outline: none;
+}
+
+/* Font and background color */
+body {
+  font-family: "Raleway", sans-serif;
+  background: #F6F9FC;
+}
+
+/* Container size */
+.container {
+  width: 81%;
+  margin: 0 auto;
+  height: 100%;
+}
+
+/* Font and buttons formatting */
+.btn {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  text-indent: 0;
+  text-align: center;
+  font-family: "Raleway", sans-serif;
+  font-weight: 500;
+  font-size: 1.1rem;
+  margin-top: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* Image formatting */
+.image {
+  cursor: pointer;
+}
+
+.image-container {
+  display: flex;
+  align-items: center;
+  padding-left: 5px;
+  height: 55px;
+}
+
+/* Font and text formatting */
+.text {
+  text-indent: 0;
+  text-align: center;
+  font-family: "Raleway", sans-serif;
+  font-weight: 500;
+  font-size: 1.1rem;
+  border-radius: 8px;
+  line-height: 55px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.btn.add {
+  color: #2A2557;
+  background: #E9F8FB;
+  border: 1px solid rgba(42, 37, 87, 0.1);
+}
+
+.btn.add:hover {
+  background-color: #71D2AE; /* Green */
+  color: white;
+}
+
+.btn.reset {
+  color: #2A2557;
+  background: #E9F8FB;
+  border: 1px solid rgba(42, 37, 87, 0.1);
+}
+
+.btn.reset:hover {
+  background-color: #F37067; /* Red */
+  color: white;
+}
+
+/* Main round border */
+.main-content {
+  width: 100%;
+  height: 100%;
+  background: white;
+  padding-bottom: 100px;
+  border-bottom-left-radius: 100px;
+  border-bottom-right-radius: 100px;
+}
+
+/* Main background */
+.main-content .main-section {
+  height: 100%;
+  background-image: url("main-bg.svg");
+  background-size: 100% 600px;
+  padding-top: 80px;
+  background-repeat: no-repeat;
+}
+
+/* Main container */
+.main-content .main-section .container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: none;
+  -ms-flex-pack: none;
+  justify-content: none;
+  -webkit-box-align: none;
+  -ms-flex-align: none;
+  align-items: none;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+/* Text */
+.main-content .main-section .container .main-text {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: none;
+  -ms-flex-pack: none;
+  justify-content: none;
+  -webkit-box-align: none;
+  -ms-flex-align: none;
+  align-items: none;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  width: 50%;
+  color: white;
+  font-size: 1rem;
+  padding-right: 10px;
+}
+
+/* Span text */
+.main-content .main-section .container .main-text span {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 2.3em;
+  line-height: 39px;
+  letter-spacing: -0.01em;
+}
+
+/* Header text */
+.main-content .main-section .container .main-text h1 {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 6.25em;
+  line-height: 102px;
+  letter-spacing: -0.01em;
+}
+
+/* Paragraph text */
+.main-content .main-section .container .main-text p {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1.5em;
+  margin-top: 45px;
+  line-height: 38px;
+  padding-right: 55px;
+}
+
+/* Form formatting */
+.main-content .main-section .container .main-form {
+  width: 50%;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: none;
+  -ms-flex-pack: none;
+  justify-content: none;
+  -webkit-box-align: none;
+  -ms-flex-align: none;
+  align-items: none;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+/* Form formatting */
+.main-content .main-section .container .main-form .form-container {
+  position: relative;
+  z-index: 1;
+}
+
+/* Form container formatting */
+.main-content .main-section .container .main-form .form-container form {
+  width: 100%;
+  max-width: 580px;
+  border-radius: 12px;
+  padding: 48px;
+  background: rgba(255, 255, 255, 0.9);
+  -webkit-box-shadow: 0px 32px 100px rgba(42, 37, 87, 0.12);
+  box-shadow: 0px 32px 100px rgba(42, 37, 87, 0.12);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: none;
+  -ms-flex-pack: none;
+  justify-content: none;
+  -webkit-box-align: none;
+  -ms-flex-align: none;
+  align-items: none;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  z-index: 1;
+}
+
+/* Inputs formatting */
+.input {
+  max-width: 550px;
+  font-size: 0.875rem;
+  font-family: "Raleway", sans-serif;
+  font-weight: 600;
+  height: 55px;
+  text-indent: 15px;
+  border: none;
+  border-radius: 8px;
+  -webkit-transition: 0.3s ease;
+  transition: 0.3s ease;
+  border: 1px solid #E9F8FB;
+}
+
+.input.area {
+  width: 98%;
+}
+
+/* Inputs width */
+.input.fractions {
+  width: 28%;
+  display: inline-block;
+}
+
+.input.fractions.result {
+  border: 1px solid #2A25571A;
+  display: flex;
+  align-items: center;
+}
+
+.input-container {
+  display: flex;
+  vertical-align: middle;
+}
+
+.main-content .main-section .container .main-form .form-container form input:focus {
+  border: 1px solid #60BEFC;
+}
+
+/* Placeholder formatting */
+.main-content .main-section .container .main-form .form-container form input::placeholder {
+  color: rgba(42, 37, 87, 0.6);
+  -webkit-transition: 0.3s ease;
+  transition: 0.3s ease;
+}
+
+/* Form label */
+.main-content .main-section .container .main-form .form-container form label {
+  font-size: 1.5rem;
+  color: #2A2557;
+  font-weight: 600;
+  margin-bottom: 18px;
+}
+
+/* Input group formatting */
+.main-content .main-section .container .main-form .form-container form .input-group {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: none;
+  -ms-flex-pack: none;
+  justify-content: none;
+  -webkit-box-align: none;
+  -ms-flex-align: none;
+  align-items: none;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+/* Input options formatting */
+.main-content .main-section .container .main-form .form-container form .options {
+  margin-top: 30px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: none;
+  -ms-flex-pack: none;
+  justify-content: none;
+  -webkit-box-align: none;
+  -ms-flex-align: none;
+  align-items: none;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+/* Options margins */
+.main-content .main-section .container .main-form .form-container form .options .inputs-container input {
+  margin-bottom: 18px;
+}
+
+/* Form controls */
+.main-content .main-section .container .main-form .form-container form .form-controls {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: none;
+  -ms-flex-align: none;
+  align-items: none;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+/* Form buttons formatting */
+.main-content .main-section .container .main-form .form-container form .form-controls .btn {
+  height: 65px;
+  width: 48%;
+  text-indent: 0;
+}
+
+/* Hide Arrows From Input Number */
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}

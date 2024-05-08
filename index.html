@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="main.css">
+  </head>
+  <title>Calculadora de frações</title>
+  <body>
+    <section class="main-content">
+      <section class="main-section">
+        <div class="container">
+        <div class="main-text">
+          <span>Bem-vindo à</span>
+          <h1>Calculadora de Frações</h1>
+          <p>Calcula frações de áreas em relação à àrea total.</p>
+        </div>
+        <div class="main-form">
+          <div class="form-container">
+            <form action="">
+              <div class="input-group">
+                <label>Área total</label>
+                <input autocomplete="off" class="input area" type="number" id="total" name="total" placeholder="Introduza o valor total da área" required="" onkeypress="return isNumberKey(event);">
+              </div>
+              <div class="options">
+                <label for="option_1">Introduza as frações a calcular. Ex: 2 / 24</label>
+                <div class="inputs-container" id="inputs-container">
+                  <div class="input-container" id="block-1">
+                    <input autocomplete="off" type="number" name="denominador_1" class="input_fractions input fractions denominator" placeholder="Denominador 1" id="denominador_1" onkeypress="return isNumberKey(event);">
+                    <span class="text">/</span>
+                    <input autocomplete="off" type="number" name="quociente_1" class="input_fractions input fractions quotient" placeholder="Quociente 1" id="quociente_1" onkeypress="return isNumberKey(event);">
+                    <span class="text">=</span>
+                    <div type="number" name="resultado_1" class="input fractions result" placeholder="Resultado 1" id="resultado_1">0.00<br>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-controls">
+                  <button type="button" class="btn add" id="add-option" onclick="addBlock(addBlockCount)">Adicionar fração</button>
+                  <button type="button" class="btn reset" id="reset-option" onClick="window.location.reload();">Reset</button>
+                </div>
+                <div class="options">
+                  <div class="input-group">
+                    <canvas style="width: 500px; height: 500px" id="chart"></canvas>
+                  </div>
+                </div>
+            </form>
+            </div>
+          </div>
+        </div>
+      </section>
+    </section>
+  </body>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    let blockCount = 1; // Number of current blocks
+    let addBlockCount = 1; // Number of the block to add (sequential number)
+    let chart;
+
+    function incrementCount() {
+      blockCount += 1;
+    }
+
+    function decrementCount() {
+      blockCount -= 1;
+    }
+
+    function incrementAddBlockCount() {
+      addBlockCount += 1;
+    }
+
+    function isNumberKey(key) {
+      // ASCII | KEY
+      // <= 31 | Navigation keys
+      // 44  | ,
+      // 45  | -
+      // 46  | .
+      // 47  | /
+      // 48  | 0
+      // 49  | 1
+      // 50  | 2
+      // 51  | 3
+      // 52  | 4
+      // 53  | 5
+      // 54  | 6
+      // 55  | 7
+      // 56  | 8
+      // 57  | 9
+      var charCode = (key.which) ? key.which : key.keyCode
+      return !(charCode > 31 && (charCode < 44 || charCode == 45 || charCode == 47 || charCode > 57));
+    }
+
+    /* Add listener to update all results when total change */
+    document.getElementById('total').addEventListener('input', updateResults);
+    /* Add listener to update first row results when an input change */
+    const inputs = document.querySelectorAll('#block-1 .input_fractions');
+    inputs.forEach(input => {
+      input.addEventListener('input', () => updateResultForBlock(1));
+    });
+
+    /* Update all results */
+    function updateResults() {
+      const total = parseFloat(document.getElementById('total').value) || 0;
+      const denominators = document.querySelectorAll('.denominator');
+      const quotients = document.querySelectorAll('.quotient');
+      const results = document.querySelectorAll('.result');
+      for (let i = 0; i < denominators.length; i++) {
+        const denominator = parseFloat(denominators[i].value) || 0;
+        const quotient = parseFloat(quotients[i].value) || 1;
+        const result = total * (denominator / quotient);
+        results[i].textContent = result.toFixed(2);
+      }
+      updateChart();
+    }
+
+    /* Update results for a specific block */
+    function updateResultForBlock(blockId) {
+      const total = parseFloat(document.getElementById('total').value) || 0;
+      const denominator = parseFloat(document.querySelector(`#block-${blockId} .denominator`).value) || 0;
+      const quotient = parseFloat(document.querySelector(`#block-${blockId} .quotient`).value) || 1;
+      const result = total * (denominator / quotient);
+      document.querySelector(`#block-${blockId} .result`).textContent = result.toFixed(2);
+      updateChart();
+    }
+
+    /* Add a new block */
+    function addBlock(blockId) {
+      incrementCount();
+      incrementAddBlockCount();
+      blockId += 1;
+
+      const blockContainer = document.createElement('div');
+      blockContainer.classList.add('input-container');
+      blockContainer.setAttribute('id', `block-${blockId}`);
+      blockContainer.innerHTML = `
+               <input autocomplete="off" type="number" name="denominador_${blockId}" class="input_fractions input fractions denominator" placeholder="Denominador ${blockId}" id="denominador_${blockId}" onkeypress="return isNumberKey(event);">
+               <span class="text">/</span>
+               <input autocomplete="off" type="number" name="quociente_${blockId}" class="input_fractions input fractions quotient" placeholder="Quociente ${blockId}" id="quociente_${blockId}" onkeypress="return isNumberKey(event);">
+               <span class="text">=</span>
+               <div type="number" name="resultado_${blockId}" class="input fractions result" placeholder="Resultado ${blockId}" id="resultado_${blockId}"><br>
+           `;
+      document.getElementById('inputs-container').appendChild(blockContainer);
+
+      if (blockCount > 1) {
+        const removeContainer = document.createElement('div');
+        removeContainer.classList.add('image-container');
+        removeContainer.setAttribute('id', `remove-button-${blockId}`);
+        removeContainer.innerHTML = `<img class="image" src="button-delete.png" alt="Remover" title="Remover linha" width="35" height="35" onclick="removeBlock(${blockId})">`;
+        blockContainer.appendChild(removeContainer);
+
+        /* Add listener to update specific row results when an input change */
+        const inputs = document.querySelectorAll(`#block-${blockId} .input_fractions`);
+        inputs.forEach(input => {
+          input.addEventListener('input', () => updateResultForBlock(blockId));
+        });
+        updateResultForBlock(blockId);
+      }
+    }
+
+    /* Remove a block */
+    function removeBlock(blockId) {
+      /* Remove event listeners associated with the removed block */
+      const inputs = document.querySelectorAll(`#block-${blockId} .input_fractions`);
+      inputs.forEach(input => {
+        input.removeEventListener('input', () => updateResultForBlock(blockId));
+      });
+
+      const blockToRemove = document.getElementById(`block-${blockId}`);
+      blockToRemove.parentNode.removeChild(blockToRemove);
+      decrementCount();
+      updateChart();
+    }
+
+    /* Chart colors */
+    const colors = ['PapayaWhip', 'LightCyan', 'LightYellow', 'AliceBlue', 'PaleGoldenRod', 'LightSkyBlue', 'MediumOrchid', 'LightSeaGreen', 'DarkKhaki', 'CornflowerBlue', 'Orange'];
+
+
+    /* Create and update the chart with the updated result values */
+    function updateChart() {
+      const chartData = [];
+      let totalFractions = 0;
+      let fractionsBackgr = []
+      let percentagesBackgr;
+      let colorsCount = 0
+
+      /* Calculate total area */
+      const totalArea = parseFloat(document.getElementById('total').valueAsNumber) || 0;;
+
+      /* Calculate the total sum of the fractions */
+      const results = document.querySelectorAll('.result');
+      results.forEach(result => {
+        const resultValue = parseFloat(result.textContent)
+        totalFractions += resultValue;
+        chartData.push(resultValue);
+        // console.log('Colors count: ' + colorsCount)
+        fractionsBackgr.push(colors[colorsCount])
+        colorsCount++;
+        if (colorsCount >= colors.length) {
+          colorsCount = 0
+        }
+      });
+
+      // console.log('Total Fractions: ' + totalFractions)
+      // console.log('Total Area: ' + totalArea)
+      const chartTitle = `Total de frações|Área total: [ ${totalFractions} | ${totalArea} ]`
+
+      /* Calculate the percentages */
+      const totalFractionsPercentage = (totalFractions / totalArea * 100)
+      const remainingPercentage = 100 - totalFractionsPercentage;
+      const percentageData = [totalFractionsPercentage, remainingPercentage];
+
+      // console.log(chartData)
+      // console.log(percentageData)
+
+      /* Format percentages colors */
+      if (remainingPercentage >= 0) {
+        percentagesBackgr = ['PaleGreen', 'WhiteSmoke']
+        // percentagesBorder = [greenBorder, grayBorder]
+      } else {
+        percentagesBackgr = ['PaleGreen', 'MistyRose']
+        // percentagesBorder = [greenBorder, redBorder]
+      }
+
+      if (chart) {
+        chart.options.plugins.title.text = chartTitle;
+        chart.data.datasets[0].data = chartData;
+        chart.data.datasets[0].backgroundColor = fractionsBackgr;
+        chart.data.datasets[1].data = percentageData;
+        chart.data.datasets[1].backgroundColor = percentagesBackgr;
+        chart.update();
+        // console.log('Chart updated')
+      } else {
+        // console.log('Chart will be created')
+        const ctx = document.getElementById('chart');
+        chart = new Chart(ctx, {
+          type: 'doughnut',
+          data: {
+            datasets: [{
+                label: '# das frações',
+                data: chartData,
+                backgroundColor: fractionsBackgr,
+                borderWidth: 1
+              },
+
+              {
+                label: '% do total',
+                data: percentageData,
+                backgroundColor: percentagesBackgr,
+                borderWidth: 1
+              }
+
+            ]
+          },
+          options: {
+            plugins: {
+              title: {
+                display: true,
+                text: chartTitle,
+                color: 'SlateBlue',
+                font: {
+                  size: 16,
+                  family: "Verdana"
+                }
+              }
+            },
+            responsive: false,
+          }
+        });
+      }
+    }
+  </script>
+</html>
